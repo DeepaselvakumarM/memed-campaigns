@@ -1,0 +1,67 @@
+.ladder {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.ladder li {
+  display: flex;
+  gap: 0.4rem;
+  align-items: baseline;
+  padding: 0.25rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.ladder li strong {
+  color: var(--text);
+}
+
+.ladder li.reached {
+  border-color: var(--success);
+  background: var(--success-bg);
+  color: var(--success);
+}
+
+.simulate {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.simulateRow {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.simulateRow input {
+  width: 8.5rem;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+}
+
+.simulateMessage {
+  font-size: 0.8rem;
+}
+
+.simulateSuccess {
+  color: var(--success);
+}
+
+.simulateWarning {
+  color: var(--warning);
+}
+
+.simulateError {
+  color: var(--danger);
+}
