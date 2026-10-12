@@ -1,3 +1,41 @@
+/* ---------- Platform badge ---------- */
+.platform {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.instagram {
+  background: var(--instagram-soft);
+  color: var(--instagram);
+}
+
+.youtube {
+  background: var(--youtube-soft);
+  color: var(--youtube);
+}
+
+/* ---------- Milestone ladder ---------- */
+.ladderWrap {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.ladderLabel {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+
 .ladder {
   list-style: none;
   margin: 0;
@@ -8,30 +46,38 @@
 }
 
 .ladder li {
-  display: flex;
+  display: inline-flex;
+  align-items: center;
   gap: 0.4rem;
-  align-items: baseline;
-  padding: 0.25rem 0.6rem;
+  padding: 0.22rem 0.55rem;
   border: 1px solid var(--border);
-  border-radius: 999px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
   font-size: 0.8rem;
   color: var(--muted);
 }
 
 .ladder li strong {
   color: var(--text);
+  font-weight: 650;
 }
 
 .ladder li.reached {
-  border-color: var(--success);
-  background: var(--success-bg);
+  border-color: color-mix(in srgb, var(--success) 35%, transparent);
+  background: var(--success-soft);
   color: var(--success);
 }
 
+.ladder li.reached strong {
+  color: var(--success);
+}
+
+/* ---------- Simulate views ---------- */
 .simulate {
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
+  align-items: flex-end;
 }
 
 .simulateRow {
@@ -42,16 +88,31 @@
 
 .simulateRow input {
   width: 8.5rem;
-  padding: 0.45rem 0.6rem;
-  border: 1px solid var(--border);
-  border-radius: 8px;
+  min-height: 36px;
+  padding: 0.35rem 0.6rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
   background: var(--surface);
   color: var(--text);
-  font: inherit;
+  font-variant-numeric: tabular-nums;
+}
+
+.simulateRow input:focus-visible {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-soft);
+}
+
+.simulateRow button {
+  min-height: 36px;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.82rem;
 }
 
 .simulateMessage {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
+  max-width: 17rem;
+  text-align: right;
 }
 
 .simulateSuccess {
@@ -64,4 +125,20 @@
 
 .simulateError {
   color: var(--danger);
+}
+
+@media (max-width: 720px) {
+  .simulateRow input {
+    width: 6.5rem;
+  }
+}
+
+@media (min-width: 721px) {
+  .simulate {
+    align-items: flex-start;
+  }
+
+  .simulateMessage {
+    text-align: left;
+  }
 }

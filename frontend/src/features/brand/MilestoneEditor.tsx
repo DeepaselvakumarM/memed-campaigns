@@ -1,4 +1,5 @@
 import { Button } from '@/ui/Button';
+import { CloseIcon, PlusIcon } from '@/ui/icons';
 import { TextField } from '@/ui/TextField';
 import styles from './brand.module.css';
 import { newMilestoneRow, type MilestoneRow } from './campaignForm';
@@ -18,6 +19,7 @@ function MilestoneRowFields({ row, position, canRemove, onUpdate, onRemove }: Mi
     <div className={styles.milestoneRow}>
       <TextField
         label={`Milestone ${position} views`}
+        hideLabel
         type="number"
         min={1}
         inputMode="numeric"
@@ -27,6 +29,7 @@ function MilestoneRowFields({ row, position, canRemove, onUpdate, onRemove }: Mi
       />
       <TextField
         label={`Milestone ${position} payout (₹)`}
+        hideLabel
         type="number"
         min={1}
         inputMode="numeric"
@@ -35,7 +38,7 @@ function MilestoneRowFields({ row, position, canRemove, onUpdate, onRemove }: Mi
         onChange={(e) => onUpdate({ payout: e.target.value })}
       />
       <Button variant="ghost" aria-label={`Remove milestone ${position}`} disabled={!canRemove} onClick={onRemove}>
-        ✕
+        <CloseIcon size={16} />
       </Button>
     </div>
   );
@@ -54,7 +57,11 @@ export function MilestoneEditor({ rows, onChange }: MilestoneEditorProps) {
   return (
     <fieldset className={styles.milestones}>
       <legend>Milestone ladder</legend>
-      <p className={styles.muted}>A creator is paid the amount of the highest milestone their post crosses.</p>
+      <p className={styles.milestoneHint}>Creators earn the payout of the highest milestone their post crosses.</p>
+      <div className={styles.milestoneHead} aria-hidden="true">
+        <span>Views</span>
+        <span>Payout (₹)</span>
+      </div>
       {rows.map((row, index) => (
         <MilestoneRowFields
           key={row.rowId}
@@ -66,7 +73,8 @@ export function MilestoneEditor({ rows, onChange }: MilestoneEditorProps) {
         />
       ))}
       <Button variant="secondary" disabled={rows.length >= MAX_MILESTONES} onClick={() => onChange([...rows, newMilestoneRow()])}>
-        + Add milestone
+        <PlusIcon size={16} />
+        Add milestone
       </Button>
     </fieldset>
   );

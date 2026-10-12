@@ -1,43 +1,77 @@
 :root {
-  --bg: #f6f7fb;
+  /* Surfaces */
+  --bg: #f5f6fa;
   --surface: #ffffff;
-  --text: #16181d;
-  --muted: #5b6270;
-  --border: #dfe2ea;
-  --primary: #5b3df5;
-  --primary-hover: #4a2ee0;
+  --surface-2: #f8f9fc;
+  --border: #e4e7ef;
+  --border-strong: #d3d8e4;
+
+  /* Text */
+  --text: #0f172a;
+  --text-2: #334155;
+  --muted: #64748b;
+
+  /* Brand */
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
+  --primary-soft: #eef2ff;
   --primary-text: #ffffff;
-  --success: #12805c;
-  --success-bg: #e6f6ef;
-  --danger: #c0262d;
-  --danger-bg: #fdecec;
-  --warning: #9a5b00;
-  --warning-bg: #fff4e0;
-  --track: #e9ebf2;
-  --focus: #5b3df5;
-  --radius: 10px;
-  --shadow: 0 1px 2px rgb(16 24 40 / 6%), 0 1px 3px rgb(16 24 40 / 8%);
+  --gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 55%, #a855f7 100%);
+
+  /* Status */
+  --success: #047857;
+  --success-soft: #ecfdf5;
+  --danger: #b91c1c;
+  --danger-soft: #fef2f2;
+  --warning: #b45309;
+  --warning-soft: #fffbeb;
+
+  /* Platforms */
+  --instagram: #d62976;
+  --instagram-soft: #fdf0f6;
+  --youtube: #e11d1d;
+  --youtube-soft: #fef1f1;
+
+  --track: #eceff5;
+  --focus: #6366f1;
+  --radius-sm: 8px;
+  --radius: 12px;
+  --radius-lg: 16px;
+  --shadow-sm: 0 1px 2px rgb(15 23 42 / 5%);
+  --shadow: 0 1px 3px rgb(15 23 42 / 6%), 0 4px 12px rgb(15 23 42 / 4%);
+  --shadow-lg: 0 10px 30px rgb(15 23 42 / 10%);
+  --content-width: 1180px;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #0f1115;
-    --surface: #181b21;
-    --text: #eceef3;
-    --muted: #9aa1ae;
-    --border: #2b2f38;
-    --primary: #8b74ff;
-    --primary-hover: #a08dff;
-    --primary-text: #0f1115;
-    --success: #4cc79a;
-    --success-bg: #12291f;
-    --danger: #ff7a7f;
-    --danger-bg: #2d1416;
-    --warning: #f0b45a;
-    --warning-bg: #2c2210;
-    --track: #2b2f38;
-    --focus: #a08dff;
-    --shadow: none;
+    --bg: #0b0d12;
+    --surface: #12151c;
+    --surface-2: #171b24;
+    --border: #242a37;
+    --border-strong: #303747;
+    --text: #e8eaf0;
+    --text-2: #c3c8d4;
+    --muted: #8a93a6;
+    --primary: #818cf8;
+    --primary-hover: #a5b4fc;
+    --primary-soft: rgb(129 140 248 / 12%);
+    --primary-text: #0b0d12;
+    --success: #34d399;
+    --success-soft: rgb(52 211 153 / 12%);
+    --danger: #f87171;
+    --danger-soft: rgb(248 113 113 / 12%);
+    --warning: #fbbf24;
+    --warning-soft: rgb(251 191 36 / 12%);
+    --instagram: #f472b6;
+    --instagram-soft: rgb(244 114 182 / 12%);
+    --youtube: #f87171;
+    --youtube-soft: rgb(248 113 113 / 12%);
+    --track: #232838;
+    --focus: #a5b4fc;
+    --shadow-sm: none;
+    --shadow: 0 1px 2px rgb(0 0 0 / 40%);
+    --shadow-lg: 0 10px 30px rgb(0 0 0 / 45%);
   }
 }
 
@@ -52,33 +86,49 @@ body {
 }
 
 body {
+  min-height: 100vh;
   background: var(--bg);
   color: var(--text);
-  font-family:
-    system-ui,
-    -apple-system,
-    'Segoe UI',
-    Roboto,
-    sans-serif;
-  line-height: 1.5;
+  font-family: var(--font-sans), system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
 }
 
 h1,
 h2,
 h3 {
   line-height: 1.25;
-  margin: 0;
+  letter-spacing: -0.015em;
 }
 
 a {
   color: var(--primary);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button,
+input,
+select {
+  font: inherit;
 }
 
 :focus-visible {
   outline: 3px solid var(--focus);
   outline-offset: 2px;
-  border-radius: 4px;
+  border-radius: 6px;
 }
 
 .visually-hidden {
@@ -88,4 +138,13 @@ a {
   overflow: hidden;
   clip: rect(0 0 0 0);
   white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
 }

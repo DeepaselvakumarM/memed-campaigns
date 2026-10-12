@@ -4,7 +4,7 @@ import { errorMessage } from '@/lib/apiClient';
 import { formatNumber, formatRupees } from '@/lib/format';
 import type { Submission } from '@/lib/types';
 import { Alert } from '@/ui/Alert';
-import { DataTable, PostLink } from '@/ui/DataTable';
+import { Cell, DataTable, PostLink } from '@/ui/DataTable';
 import { SimulateViews } from '../campaigns/SimulateViews';
 import styles from './brand.module.css';
 import { useCampaignSubmissions } from './brandApi';
@@ -12,20 +12,24 @@ import { useCampaignSubmissions } from './brandApi';
 function SubmissionRow({ submission }: { submission: Submission }) {
   return (
     <tr>
-      <td>{submission.creatorName}</td>
-      <td>
+      <Cell label="Creator" className={styles.creatorCell}>
+        {submission.creatorName}
+      </Cell>
+      <Cell label="Post">
         <PostLink url={submission.postUrl} />
-      </td>
-      <td>{formatNumber(submission.views)}</td>
-      <td>
-        {formatRupees(submission.paidAmount)}
-        {submission.unpaidDueToBudget > 0 && (
-          <div className={styles.muted}>{formatRupees(submission.unpaidDueToBudget)} unpaid (budget)</div>
-        )}
-      </td>
-      <td>
+      </Cell>
+      <Cell label="Views">{formatNumber(submission.views)}</Cell>
+      <Cell label="Paid">
+        <span>
+          {formatRupees(submission.paidAmount)}
+          {submission.unpaidDueToBudget > 0 && (
+            <span className={styles.unpaid}>{formatRupees(submission.unpaidDueToBudget)} unpaid (budget)</span>
+          )}
+        </span>
+      </Cell>
+      <Cell label="Simulate views">
         <SimulateViews submissionId={submission.id} currentViews={submission.views} />
-      </td>
+      </Cell>
     </tr>
   );
 }
@@ -35,7 +39,7 @@ export function CampaignSubmissions({ campaignId }: { campaignId: string }) {
 
   if (submissions.isPending) return <p className={styles.muted}>Loading submissions…</p>;
   if (submissions.isError) return <Alert tone="error">{errorMessage(submissions.error)}</Alert>;
-  if (submissions.data.length === 0) return <p className={styles.muted}>No posts submitted yet.</p>;
+  if (submissions.data.length === 0) return <p className={styles.muted}>No posts submitted to this campaign yet.</p>;
 
   return (
     <DataTable>

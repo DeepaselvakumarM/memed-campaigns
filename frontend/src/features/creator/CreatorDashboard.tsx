@@ -2,45 +2,39 @@
 
 import { errorMessage } from '@/lib/apiClient';
 import { Alert } from '@/ui/Alert';
+import { Page } from '@/ui/Page';
+import { PageHeader, SectionHeading } from '@/ui/PageHeader';
+import { useSession } from '../auth/useSession';
 import styles from './creator.module.css';
 import { useEarnings } from './creatorApi';
 import { EarningsSummary } from './EarningsSummary';
 import { LiveCampaigns } from './LiveCampaigns';
 import { MySubmissions } from './MySubmissions';
 
-function EarningsSection() {
+export function CreatorDashboard() {
+  const firstName = useSession()?.user.name.split(' ')[0] ?? '';
   const earnings = useEarnings();
 
-  if (earnings.isPending) return <p className={styles.muted}>Loading your earnings…</p>;
-  if (earnings.isError) return <Alert tone="error">{errorMessage(earnings.error)}</Alert>;
   return (
-    <>
-      <EarningsSummary earnings={earnings.data} />
-      <section className={styles.section} aria-labelledby="my-posts-title">
-        <h2 id="my-posts-title" className={styles.sectionTitle}>
-          Your posts
-        </h2>
-        <MySubmissions submissions={earnings.data.submissions} />
-      </section>
-    </>
-  );
-}
+    <Page>
+      <PageHeader
+        eyebrow="Creator dashboard"
+        title={`Welcome back, ${firstName}`}
+        subtitle="Submit posts to live campaigns and get paid as your views climb."
+      />
+      {earnings.isError && <Alert tone="error">{errorMessage(earnings.error)}</Alert>}
+      {earnings.isSuccess && <EarningsSummary earnings={earnings.data} />}
 
-export function CreatorDashboard() {
-  return (
-    <main className={styles.layout}>
-      <section className={styles.section} aria-labelledby="earnings-title">
-        <h2 id="earnings-title" className={styles.sectionTitle}>
-          Your earnings
-        </h2>
-        <EarningsSection />
-      </section>
       <section className={styles.section} aria-labelledby="live-campaigns-title">
-        <h2 id="live-campaigns-title" className={styles.sectionTitle}>
-          Live campaigns
-        </h2>
+        <SectionHeading id="live-campaigns-title" title="Live campaigns" />
         <LiveCampaigns />
       </section>
-    </main>
+
+      <section className={styles.section} aria-labelledby="my-posts-title">
+        <SectionHeading id="my-posts-title" title="Your posts" count={earnings.data?.submissionCount} />
+        {earnings.isPending && <p className={styles.muted}>Loading your posts…</p>}
+        {earnings.isSuccess && <MySubmissions submissions={earnings.data.submissions} />}
+      </section>
+    </Page>
   );
 }

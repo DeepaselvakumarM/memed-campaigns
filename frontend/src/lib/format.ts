@@ -6,7 +6,8 @@ const rupeeFormatter = new Intl.NumberFormat('en-IN', {
   maximumFractionDigits: 0,
 });
 
-const compactFormatter = new Intl.NumberFormat('en-IN', { notation: 'compact', maximumFractionDigits: 1 });
+// Views use K/M (as in the brief: "10K views"); money keeps Indian grouping.
+const compactFormatter = new Intl.NumberFormat('en-US', { notation: 'compact', maximumFractionDigits: 1 });
 const numberFormatter = new Intl.NumberFormat('en-IN');
 
 /** ₹1,20,000 */
@@ -19,7 +20,7 @@ export function formatNumber(value: number): string {
   return numberFormatter.format(value);
 }
 
-/** 10K, 1.2L-style compact view counts for milestone labels. */
+/** 10K, 1.5M: compact view counts for milestone labels. */
 export function formatViews(views: number): string {
   return compactFormatter.format(views);
 }

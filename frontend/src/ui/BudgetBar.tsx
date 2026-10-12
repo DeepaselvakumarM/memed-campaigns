@@ -12,6 +12,14 @@ export function BudgetBar({ spent, total }: BudgetBarProps) {
 
   return (
     <div className={styles.budget}>
+      <div className={styles.budgetFigures}>
+        <span className={styles.budgetSpent}>
+          {formatRupees(spent)} <span className={styles.budgetOf}>spent of {formatRupees(total)}</span>
+        </span>
+        <span className={styles.budgetLeft}>
+          <strong>{formatRupees(remaining)}</strong> left · {percent}% used
+        </span>
+      </div>
       <div
         className={styles.track}
         role="progressbar"
@@ -22,14 +30,6 @@ export function BudgetBar({ spent, total }: BudgetBarProps) {
         aria-valuetext={`${formatRupees(spent)} of ${formatRupees(total)} spent`}
       >
         <div className={`${styles.fill} ${remaining <= 0 ? styles.fillFull : ''}`} style={{ width: `${percent}%` }} />
-      </div>
-      <div className={styles.budgetLegend}>
-        <span>
-          Spent <strong>{formatRupees(spent)}</strong> ({percent}%)
-        </span>
-        <span>
-          Remaining <strong>{formatRupees(remaining)}</strong> of {formatRupees(total)}
-        </span>
       </div>
     </div>
   );

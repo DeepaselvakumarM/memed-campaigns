@@ -45,7 +45,7 @@ export function SubmitPostForm({ campaignId, platform }: SubmitPostFormProps) {
         </Button>
       </div>
       {submitPost.isError && <Alert tone="error">{errorMessage(submitPost.error)}</Alert>}
-      {submitPost.isSuccess && <Alert tone="success">Post submitted. Track it under &ldquo;Your posts&rdquo;.</Alert>}
+      {submitPost.isSuccess && <Alert tone="success">Post submitted — track it under &ldquo;Your posts&rdquo;.</Alert>}
     </form>
   );
 }

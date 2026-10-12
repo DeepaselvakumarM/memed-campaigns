@@ -58,7 +58,7 @@ describe('CreateCampaignForm', () => {
     const user = userEvent.setup();
     renderForm();
 
-    await user.click(screen.getByRole('button', { name: '+ Add milestone' }));
+    await user.click(screen.getByRole('button', { name: 'Add milestone' }));
     expect(screen.getByLabelText('Milestone 4 views')).toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: 'Remove milestone 1' }));

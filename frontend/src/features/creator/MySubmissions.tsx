@@ -1,15 +1,24 @@
 import { formatNumber, formatRupees, formatViews } from '@/lib/format';
 import type { Submission } from '@/lib/types';
-import { DataTable, PostLink } from '@/ui/DataTable';
+import { Cell, DataTable, PostLink } from '@/ui/DataTable';
+import { EmptyState } from '@/ui/EmptyState';
+import { CheckIcon, FileIcon } from '@/ui/icons';
 import { SimulateViews } from '../campaigns/SimulateViews';
 import styles from './creator.module.css';
 
 function NextTarget({ submission }: { submission: Submission }) {
   const next = submission.nextMilestone;
-  if (!next) return <span className={styles.muted}>All milestones reached</span>;
+  if (!next) {
+    return (
+      <span className={styles.done}>
+        <CheckIcon size={14} /> All reached
+      </span>
+    );
+  }
   return (
-    <span>
-      {formatViews(next.viewThreshold)} views → {formatRupees(next.payout)}
+    <span className={styles.nextTarget}>
+      <span>{formatRupees(next.payout)}</span>
+      <small>at {formatViews(next.viewThreshold)} views</small>
     </span>
   );
 }
@@ -17,30 +26,38 @@ function NextTarget({ submission }: { submission: Submission }) {
 function SubmissionRow({ submission }: { submission: Submission }) {
   return (
     <tr>
-      <td>{submission.campaignName}</td>
-      <td>
+      <Cell label="Campaign" className={styles.campaignCell}>
+        {submission.campaignName}
+      </Cell>
+      <Cell label="Post">
         <PostLink url={submission.postUrl} />
-      </td>
-      <td>{formatNumber(submission.views)}</td>
-      <td>
-        <strong>{formatRupees(submission.paidAmount)}</strong>
-        {submission.unpaidDueToBudget > 0 && (
-          <div className={styles.muted}>{formatRupees(submission.unpaidDueToBudget)} unpaid (budget ran out)</div>
-        )}
-      </td>
-      <td>
+      </Cell>
+      <Cell label="Views">{formatNumber(submission.views)}</Cell>
+      <Cell label="Earned">
+        <span>
+          <span className={styles.amount}>{formatRupees(submission.paidAmount)}</span>
+          {submission.unpaidDueToBudget > 0 && (
+            <span className={styles.unpaid}>{formatRupees(submission.unpaidDueToBudget)} unpaid (budget ran out)</span>
+          )}
+        </span>
+      </Cell>
+      <Cell label="Next milestone">
         <NextTarget submission={submission} />
-      </td>
-      <td>
+      </Cell>
+      <Cell label="Simulate views">
         <SimulateViews submissionId={submission.id} currentViews={submission.views} />
-      </td>
+      </Cell>
     </tr>
   );
 }
 
 export function MySubmissions({ submissions }: { submissions: Submission[] }) {
   if (submissions.length === 0) {
-    return <p className={styles.muted}>You haven&apos;t submitted any posts yet. Pick a campaign above to get started.</p>;
+    return (
+      <EmptyState icon={<FileIcon />} title="No posts yet">
+        Pick a live campaign above and submit your post link to start earning.
+      </EmptyState>
+    );
   }
   return (
     <DataTable>

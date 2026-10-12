@@ -27,7 +27,12 @@ interface CampaignDetailsFieldsProps {
 function CampaignDetailsFields({ form, onUpdate }: CampaignDetailsFieldsProps) {
   return (
     <>
-      <TextField label="Campaign name" value={form.name} onChange={(e) => onUpdate({ name: e.target.value })} />
+      <TextField
+        label="Campaign name"
+        placeholder="e.g. Diwali Launch"
+        value={form.name}
+        onChange={(e) => onUpdate({ name: e.target.value })}
+      />
       <SelectField
         label="Platform"
         placeholder="Select a platform"
@@ -40,6 +45,7 @@ function CampaignDetailsFields({ form, onUpdate }: CampaignDetailsFieldsProps) {
         type="number"
         min={1}
         inputMode="numeric"
+        placeholder="e.g. 50000"
         hint="Total payouts can never exceed this amount."
         value={form.totalBudget}
         onChange={(e) => onUpdate({ totalBudget: e.target.value })}
@@ -61,14 +67,17 @@ export function CreateCampaignForm() {
   return (
     <Card aria-labelledby="create-campaign-title">
       <form className={styles.form} onSubmit={handleSubmit} noValidate>
-        <h2 id="create-campaign-title" className={styles.sectionTitle}>
-          Create a campaign
-        </h2>
+        <div>
+          <h2 id="create-campaign-title" className={styles.formTitle}>
+            New campaign
+          </h2>
+          <p className={styles.formIntro}>Set a budget and the views creators need to hit.</p>
+        </div>
         <CampaignDetailsFields form={form} onUpdate={update} />
         <MilestoneEditor rows={form.milestones} onChange={(milestones) => update({ milestones })} />
         {createCampaign.isError && <Alert tone="error">{errorMessage(createCampaign.error)}</Alert>}
         {createCampaign.isSuccess && <Alert tone="success">Campaign &ldquo;{createCampaign.data.name}&rdquo; is live.</Alert>}
-        <Button type="submit" isLoading={createCampaign.isPending} loadingText="Creating…">
+        <Button type="submit" block isLoading={createCampaign.isPending} loadingText="Creating…">
           Create campaign
         </Button>
       </form>

@@ -14,7 +14,7 @@ interface RolePickerProps {
 export function RolePicker({ value, onChange }: RolePickerProps) {
   return (
     <fieldset className={styles.roleGroup}>
-      <legend>Account type</legend>
+      <legend>I am a…</legend>
       {ROLE_OPTIONS.map((option) => (
         <label key={option.value} className={styles.roleOption}>
           <input
@@ -24,10 +24,8 @@ export function RolePicker({ value, onChange }: RolePickerProps) {
             checked={value === option.value}
             onChange={() => onChange(option.value)}
           />
-          <span>
-            <strong>{option.title}</strong>
-            <small>{option.description}</small>
-          </span>
+          <span className={styles.roleTitle}>{option.title}</span>
+          <small>{option.description}</small>
         </label>
       ))}
     </fieldset>

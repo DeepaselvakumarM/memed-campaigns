@@ -5,7 +5,6 @@ import { useState, type FormEvent } from 'react';
 import { errorMessage } from '@/lib/apiClient';
 import { Alert } from '@/ui/Alert';
 import { Button } from '@/ui/Button';
-import { Card } from '@/ui/Card';
 import { TextField } from '@/ui/TextField';
 import styles from './auth.module.css';
 import { useLogin } from './authApi';
@@ -21,13 +20,18 @@ export function LoginForm() {
   }
 
   return (
-    <Card className={styles.panel}>
-      <div>
-        <h1 className={styles.brandMark}>Meme&apos;d</h1>
-        <p className={styles.subtitle}>Log in to manage campaigns or track your earnings.</p>
-      </div>
+    <>
+      <h1 className={styles.title}>Welcome back</h1>
+      <p className={styles.subtitle}>Log in to manage your campaigns or track your earnings.</p>
       <form className={styles.form} onSubmit={handleSubmit} noValidate>
-        <TextField label="Email" type="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+        <TextField
+          label="Email"
+          type="email"
+          autoComplete="email"
+          placeholder="you@example.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
         <TextField
           label="Password"
           type="password"
@@ -36,13 +40,13 @@ export function LoginForm() {
           onChange={(e) => setPassword(e.target.value)}
         />
         {login.isError && <Alert tone="error">{errorMessage(login.error)}</Alert>}
-        <Button type="submit" isLoading={login.isPending} loadingText="Logging in…">
+        <Button type="submit" block isLoading={login.isPending} loadingText="Logging in…">
           Log in
         </Button>
       </form>
       <p className={styles.switch}>
-        New here? <Link href="/signup">Create an account</Link>
+        New to Meme&apos;d? <Link href="/signup">Create an account</Link>
       </p>
-    </Card>
+    </>
   );
 }

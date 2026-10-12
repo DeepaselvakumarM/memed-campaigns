@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { AlertIcon, CheckIcon } from './icons';
 import styles from './ui.module.css';
 
 interface AlertProps {
@@ -10,7 +11,8 @@ interface AlertProps {
 export function Alert({ tone, children }: AlertProps) {
   return (
     <div role={tone === 'error' ? 'alert' : 'status'} className={`${styles.alert} ${styles[tone]}`}>
-      {children}
+      {tone === 'success' ? <CheckIcon size={16} /> : <AlertIcon size={16} />}
+      <span>{children}</span>
     </div>
   );
 }
